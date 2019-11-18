@@ -1,0 +1,191 @@
+#include <stdio.h>
+#include <time.h>               // time
+#include "libxlsxwriter.h"      // XL file
+#include <stdlib.h>             // delay
+
+// 22inhg = upper spec
+
+int main();
+void delay()
+{
+int    *i;                      // row data
+int    *C;                      // clock variable
+char    T;                      // table
+double  A;                      // time =   0  minutes
+double  S;                      // time =  10  minutes
+double  D;                      // time =  30  minutes
+double  F;                      // time =  60  minutes
+double  G;                      // time =  90  minutes
+double  H;                      // time = 120  minutes
+float   J;                      // average vacuum Level
+int row = 0;                    // zero indexed
+int col = 0;                    // zero indexed
+int bold;                       // doubt
+
+// create new workbook and worksheet
+lxw_workbook *workbook = workbook_new("Data.xlxs");
+lxw_worksheet *worksheet = workbook_add_worksheet(workbook, NULL);
+
+// create bold format
+lxw_format *bold = workbook_add_format(workbook);
+format_set_bold(bold);
+ 
+// create date format
+lxw_format *format = workbook_add_format(workbook);
+    format_set_num_format(format, "dd/mm/yy hh:mm:ss");
+  
+format_set_bg_color(bold, LXW_COLOR_GREEN);
+format_set_bg_color(bold, LXW_COLOR_RED);
+
+// headers
+worksheet_write_string (worksheet, row, col,     "Vacuum Table",            bold);
+worksheet_write_string (worksheet, row, col + 1, "Date",                    bold);
+worksheet_write_string (worksheet, row, col + 2, "Cycle Duration",          bold);
+worksheet_write_string (worksheet, row, col + 3, "Vacuum Level @ 0 Mins",   bold);
+worksheet_write_string (worksheet, row, col + 4, "Vacuum Level @ 10 Mins",  bold);
+worksheet_write_string (worksheet, row, col + 5, "Vacuum Level @ 30 Mins",  bold);
+worksheet_write_string (worksheet, row, col + 6, "Vacuum Level @ 60 Mins",  bold);
+worksheet_write_string (worksheet, row, col + 7, "Vacuum Level @ 90 Mins",  bold);
+worksheet_write_string (worksheet, row, col + 8, "Vacuum Level @ 120 Mins", bold);
+worksheet_write_string (worksheet, row, col + 9, "Vacuum Level AVG",        bold);
+
+{
+// C increases by one increment every 60 seconds until C = 120
+    for (*C = 0; *C <= 120; *C++)
+      {
+        delay(60000);
+// delay of 60 seconds => 60,000 milliseconds
+      }
+
+start:
+  {
+printf("Input Table Letter, if unknown input 'E':\n");
+// find table being used
+  scanf("%c", &T);
+// require user input
+  if (! ( (T >= 'a' && T <= 'e') || ( T >= 'A' && T <= 'E' ) ) )
+// if T is not a character a/A-e/E print invalid entry until valid entry is input
+  {
+    printf("Invalid Entry\n");
+        goto start;
+  }
+  else if (! ( (T = 'e' &T ) || (T = 'E' &T ) ) )
+// if table is unknown print unknown
+  {
+    worksheet_write_string (worksheet, row + 1, col, "Unknown", Data);
+  }
+else
+  {
+    worksheet_write_string (worksheet, row + 1, col, "%c", &T, Data);
+  }
+
+if C = 0
+// if Time = 0, scan for Vacuum level for T = 0
+{
+  scanf("%lf", &A);
+
+ if A <= 22
+  {
+// set background color to green
+    worksheet_write_string (worksheet, row + 1, col + 3, "%lf", &A, LXW_COLOR_GREEN);
+  }
+else
+  {
+// set background color to red
+    worksheet_write_string (worksheet, row + 1, col + 3, "%lf", &A, LXW_COLOR_RED);
+  }
+}
+
+if C = 10
+  scanf("%lf", &S);
+// scan for T = 10
+if S <= 22
+  {
+// set background color to green
+    worksheet_write_string (worksheet, row + 1, col + 4, "%lf", &S, LXW_COLOR_GREEN);
+  }
+else
+  {
+// set background color to red
+    worksheet_write_string (worksheet, row + 1, col + 4, "%lf", &S, LXW_COLOR_RED);
+  }
+}
+if C = 30
+  scanf("%lf", &D);
+// scan for T = 30
+if D <= 22
+  {
+// set background color to green
+    worksheet_write_string (worksheet, row + 1, col + 5, "%lf", &D, LXW_COLOR_GREEN);
+  }
+else
+  {
+// set background color to red
+    worksheet_write_string (worksheet, row + 1, col + 5, "%lf", &D, LXW_COLOR_RED);
+  }
+}
+
+if C = 60
+  scanf("%lf", &F);
+// scan for T = 60
+if F <= 22
+  {
+// set background color to green
+    worksheet_write_string (worksheet, row + 1, col + 6, "%lf", &F, LXW_COLOR_GREEN);
+  }
+else
+  {
+// set background color to red
+    worksheet_write_string (worksheet, row + 1, col + 6, "%lf", &F, LXW_COLOR_RED);
+  }
+}
+if C = 90
+  scanf("%lf", &G);
+// scan for T = 90
+if G <= 22
+  {
+// set background color to green
+    worksheet_write_string (worksheet, row + 1, col + 7, "%lf", &G, LXW_COLOR_GREEN);
+  }
+else
+  {
+// set background color to red
+    worksheet_write_string (worksheet, row + 1, col + 7, "%lf", &G, LXW_COLOR_RED);
+  }
+}
+if C = 120
+  scanf("%lf", &H);
+// scan for T = 120
+if H <= 22
+  {
+// set background color to green
+    worksheet_write_string (worksheet, row + 1, col + 8, "%lf", &H, LXW_COLOR_GREEN);
+  }
+else
+  {
+// set background color to red
+    worksheet_write_string (worksheet, row + 1, col + 8, "%lf", &H, LXW_COLOR_RED);
+  }
+}
+
+// solve for average
+    worksheet_write_formula (worksheet, row + 1, col + 9, "=AVERAGE(E2:J2)", NULL);
+
+// cycle duration?
+time_t seconds;
+time(&seconds);
+    worksheet_write_string (worksheet, row + 1, col + 2, "%ld", Data)
+
+// write date
+    worksheet_write_datetime(worksheet, row + 1, col + 1, &datetime, format);
+
+
+// save location for file
+    FileInfo Spreadsheet = new FineInfo("@P:/Users/Lauren.Deni/Data.xls");
+    document.SaveAs("Data.xls");
+
+// close workbook
+    return workbook_close(workbook);
+    }
+  }
+}
